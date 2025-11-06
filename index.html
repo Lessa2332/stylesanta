@@ -86,22 +86,36 @@
             font-size: 1em;
             font-weight: 700;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
         .sound-btn { background-color: #4CAF50; color: white; }
         .sound-btn.off { background-color: #f44336; }
-        .etsy-btn { background-color: #D42426; color: white; }
+        .etsy-btn { background-color: #D42426; color: white; text-decoration: none; }
         .lang-btn { background-color: #1E88E5; color: white; }
+
+        .sound-btn:hover, .etsy-btn:hover, .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 0.8em;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="arjs-loader" id="loader">
         <div class="pulse">🎄 Santa Over the World</div>
         <div style="margin-top: 20px; font-size: 1.2em;">Point your camera at the marker! 🎅🌍</div>
+        <div class="error-message" id="resource-error"></div>
     </div>
 
     <a-scene
-        mindar-image="imageTargetSrc: ./my-marker.mind;"
+        mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/card.mind;"
         vr-mode-ui="enabled: false"
         device-orientation-permission-ui="enabled: false"
         loading-screen="enabled: false"
@@ -110,33 +124,20 @@
         arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720; debugUIEnabled: false;"
     >
         <a-assets>
-            <audio id="bg-music" src="./bg-music.mp3" preload="auto" loop></audio>
-            <img id="earth-texture" src="./earth.jpg">
-            <img id="santa-sleigh-img" src="./santa-sleigh.png">
-            <video id="video" autoplay playsinline style="display:none;"></video>
+            <!-- Using online resources instead of local files -->
+            <audio id="bg-music" src="https://cdn.freesound.org/previews/685/685834_11861866-lq.mp3" preload="auto" loop></audio>
+            <img id="earth-texture" src="https://cdn.jsdelivr.net/gh/aframevr/aframe@master/examples/assets/earth.jpg">
+            <img id="santa-sleigh-img" src="https://cdn.jsdelivr.net/gh/danielribeirodev/a-frame-christmas@main/assets/santa-sleigh.png">
+            <img id="snowflake-img" src="https://cdn.jsdelivr.net/gh/danielribeirodev/a-frame-christmas@main/assets/snowflake.png">
         </a-assets>
 
-        <!-- Camera video feed -->
-        <a-entity camera>
-            <a-video
-                id="camera-video"
-                src="#video"
-                width="1280"
-                height="720"
-                position="0 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"
-                visible="true"
-            ></a-video>
-        </a-entity>
-
-        <a-camera position="0 0 1.5" look-controls="enabled: false"></a-camera>
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
         <a-entity mindar-image-target="targetIndex: 0">
             <!-- Earth -->
             <a-sphere
                 id="earth"
-                position="0 0 -0.5"
+                position="0 0.5 0"
                 radius="0.4"
                 src="#earth-texture"
                 material="opacity: 1; transparent: false"
@@ -144,97 +145,115 @@
                 <a-animation
                     attribute="rotation"
                     to="0 360 0"
-                    dur="8000"
+                    dur="20000"
                     repeat="indefinite"
                     easing="linear"
                 ></a-animation>
             </a-sphere>
 
-            <!-- Santa sleigh with path animation -->
-            <a-entity id="santa-container" position="0 0 -0.5">
+            <!-- Santa sleigh with orbital animation -->
+            <a-entity id="santa-container">
                 <a-image
                     id="santa-sleigh"
                     src="#santa-sleigh-img"
-                    position="0 0.6 0.4"
-                    scale="0.25 0.25 0.25"
-                    visible="true"
+                    position="0.7 0.8 0"
+                    scale="0.3 0.15 1"
+                    animation="property: rotation; to: 0 360 0; dur: 15000; loop: true; easing: linear"
                 ></a-image>
 
-                <!-- Snow trail particles (simple version) -->
-                <a-entity id="snow-trail">
-                    <!-- Snowflake 1 -->
-                    <a-image
-                        src="https://cdn.aframe.io/particle-system/examples/images/snowflake1.png"
-                        position="0 0 0"
-                        scale="0.05 0.05 0.05"
-                        rotation="0 0 0"
-                    >
-                        <a-animation
-                            attribute="position"
-                            to="0 -0.3 0"
-                            dur="1500"
-                            repeat="indefinite"
-                            easing="linear"
-                        ></a-animation>
-                        <a-animation
-                            attribute="scale"
-                            to="0.03 0.03 0.03"
-                            dur="1500"
-                            repeat="indefinite"
-                            easing="linear"
-                        ></a-animation>
-                    </a-image>
-                    <!-- Snowflake 2 -->
-                    <a-image
-                        src="https://cdn.aframe.io/particle-system/examples/images/snowflake1.png"
-                        position="0.05 0.05 0"
-                        scale="0.04 0.04 0.04"
-                        rotation="0 0 0"
-                    >
-                        <a-animation
-                            attribute="position"
-                            to="0.05 -0.25 0"
-                            dur="1800"
-                            repeat="indefinite"
-                            easing="linear"
-                        ></a-animation>
-                        <a-animation
-                            attribute="scale"
-                            to="0.02 0.02 0.02"
-                            dur="1800"
-                            repeat="indefinite"
-                            easing="linear"
-                        ></a-animation>
-                    </a-image>
-                    <!-- Snowflake 3 -->
-                    <a-image
-                        src="https://cdn.aframe.io/particle-system/examples/images/snowflake1.png"
-                        position="-0.05 0.05 0"
-                        scale="0.06 0.06 0.06"
-                        rotation="0 0 0"
-                    >
-                        <a-animation
-                            attribute="position"
-                            to="-0.05 -0.28 0"
-                            dur="1600"
-                            repeat="indefinite"
-                            easing="linear"
-                        ></a-animation>
-                        <a-animation
-                            attribute="scale"
-                            to="0.03 0.03 0.03"
-                            dur="1600"
-                            repeat="indefinite"
-                            easing="linear"
-                        ></a-animation>
-                    </a-image>
+                <!-- Orbital animation for Santa -->
+                <a-animation
+                    attribute="position"
+                    from="0.7 0.8 0"
+                    to="-0.7 0.8 0"
+                    dur="10000"
+                    repeat="indefinite"
+                    easing="linear"
+                ></a-animation>
+                <a-animation
+                    attribute="position"
+                    from="-0.7 0.8 0"
+                    to="0.7 0.8 0"
+                    dur="10000"
+                    repeat="indefinite"
+                    begin="10000"
+                    easing="linear"
+                ></a-animation>
+
+                <!-- Snow trail particles -->
+                <a-entity id="snow-trail" position="0 -0.2 0">
+                    <!-- Multiple snowflakes with different animations -->
+                    <a-entity class="snowflake" position="0 0 0">
+                        <a-image
+                            src="#snowflake-img"
+                            scale="0.03 0.03 0.03"
+                            animation="property: position; to: 0 -0.3 0; dur: 2000; loop: true; easing: linear"
+                        ></a-image>
+                    </a-entity>
+                    <a-entity class="snowflake" position="0.05 0 0">
+                        <a-image
+                            src="#snowflake-img"
+                            scale="0.025 0.025 0.025"
+                            animation="property: position; to: 0.05 -0.25 0; dur: 1800; loop: true; easing: linear"
+                        ></a-image>
+                    </a-entity>
+                    <a-entity class="snowflake" position="-0.05 0 0">
+                        <a-image
+                            src="#snowflake-img"
+                            scale="0.035 0.035 0.035"
+                            animation="property: position; to: -0.05 -0.28 0; dur: 2200; loop: true; easing: linear"
+                        ></a-image>
+                    </a-entity>
+                    <a-entity class="snowflake" position="0.03 0.02 0">
+                        <a-image
+                            src="#snowflake-img"
+                            scale="0.02 0.02 0.02"
+                            animation="property: position; to: 0.03 -0.2 0; dur: 1600; loop: true; easing: linear"
+                        ></a-image>
+                    </a-entity>
+                    <a-entity class="snowflake" position="-0.03 0.02 0">
+                        <a-image
+                            src="#snowflake-img"
+                            scale="0.04 0.04 0.04"
+                            animation="property: position; to: -0.03 -0.35 0; dur: 2400; loop: true; easing: linear"
+                        ></a-image>
+                    </a-entity>
                 </a-entity>
             </a-entity>
+
+            <!-- Christmas trees as decorations -->
+            <a-cone 
+                color="#2E7D32" 
+                position="-0.3 0.2 0" 
+                height="0.3" 
+                radius-bottom="0.1" 
+                radius-top="0.01"
+            ></a-cone>
+            <a-cylinder 
+                color="#5D4037" 
+                position="-0.3 0.05 0" 
+                height="0.1" 
+                radius="0.03"
+            ></a-cylinder>
+
+            <a-cone 
+                color="#2E7D32" 
+                position="0.3 0.15 0" 
+                height="0.25" 
+                radius-bottom="0.08" 
+                radius-top="0.01"
+            ></a-cone>
+            <a-cylinder 
+                color="#5D4037" 
+                position="0.3 0.025 0" 
+                height="0.05" 
+                radius="0.025"
+            ></a-cylinder>
         </a-entity>
     </a-scene>
 
     <div class="controls">
-        <button id="sound-btn" class="sound-btn">Turn Sound On</button>
+        <button id="sound-btn" class="sound-btn off">Turn Sound On</button>
         <a href="https://smartlessa.etsy.com" target="_blank" class="etsy-btn">Visit Etsy</a>
         <button id="lang-btn" class="lang-btn">🇺🇦 Українська</button>
     </div>
@@ -282,35 +301,52 @@
         const bgMusic = document.querySelector('#bg-music');
         const soundBtn = document.querySelector('#sound-btn');
         const langBtn = document.querySelector('#lang-btn');
+        const errorMessage = document.querySelector('#resource-error');
 
-        // Santa animation logic
-        const santaContainer = document.querySelector('#santa-container');
-        let time = 0;
-        const radius = 0.7;
-        const heightOffset = 0.2;
+        // Resource loading check
+        let resourcesLoaded = 0;
+        const totalResources = 4; // audio, earth, santa, snowflake
 
-        function animateSanta() {
-            if (!santaContainer) return;
-            time += 0.01;
-            const angle = time * 0.5; // Speed of orbit
-            const x = Math.sin(angle) * radius;
-            const z = Math.cos(angle) * radius;
-            const y = Math.sin(time * 2) * 0.15 + heightOffset; // Gentle up/down motion
-
-            santaContainer.object3D.position.set(x, y, z);
-            santaContainer.object3D.lookAt(0, 0, -0.5); // Look toward Earth
-
-            requestAnimationFrame(animateSanta);
+        function checkResourceLoaded() {
+            resourcesLoaded++;
+            if (resourcesLoaded === totalResources) {
+                console.log('✅ All resources loaded successfully');
+            }
         }
+
+        function handleResourceError(resourceName) {
+            console.error(`❌ Failed to load ${resourceName}`);
+            errorMessage.textContent = `Failed to load ${resourceName}. Some features may not work properly.`;
+            errorMessage.style.display = 'block';
+        }
+
+        // Add event listeners for resource loading
+        bgMusic.addEventListener('canplaythrough', checkResourceLoaded);
+        bgMusic.addEventListener('error', () => handleResourceError('background music'));
+        
+        const earthImg = document.querySelector('#earth-texture');
+        earthImg.addEventListener('load', checkResourceLoaded);
+        earthImg.addEventListener('error', () => handleResourceError('earth texture'));
+        
+        const santaImg = document.querySelector('#santa-sleigh-img');
+        santaImg.addEventListener('load', checkResourceLoaded);
+        santaImg.addEventListener('error', () => handleResourceError('santa sleigh image'));
+        
+        const snowflakeImg = document.querySelector('#snowflake-img');
+        snowflakeImg.addEventListener('load', checkResourceLoaded);
+        snowflakeImg.addEventListener('error', () => handleResourceError('snowflake image'));
 
         targetEntity.addEventListener('targetFound', () => {
             loader.style.display = 'none';
+            // Try to play music when target is found
             if (bgMusic.paused) {
-                bgMusic.play().catch(e => console.log("🔇 Audio play error:", e));
-                soundBtn.classList.remove('off');
-                soundBtn.textContent = isUkrainian ? translations.uk.soundOff : translations.en.soundOff;
+                bgMusic.play().catch(e => {
+                    console.log("🔇 Audio play error:", e);
+                    // Show user-friendly message
+                    errorMessage.textContent = "Could not play audio. Please interact with the page first or check permissions.";
+                    errorMessage.style.display = 'block';
+                });
             }
-            animateSanta();
         });
 
         targetEntity.addEventListener('targetLost', () => {
@@ -319,7 +355,11 @@
 
         soundBtn.addEventListener('click', () => {
             if (bgMusic.paused) {
-                bgMusic.play().catch(e => console.log("🔇 Audio play error:", e));
+                bgMusic.play().catch(e => {
+                    console.log("🔇 Audio play error:", e);
+                    errorMessage.textContent = "Could not play audio. Please interact with the page first or check permissions.";
+                    errorMessage.style.display = 'block';
+                });
                 soundBtn.classList.remove('off');
                 soundBtn.textContent = isUkrainian ? translations.uk.soundOff : translations.en.soundOff;
             } else {
@@ -333,14 +373,8 @@
             setLanguage(isUkrainian ? 'en' : 'uk');
         });
 
-        // Preload assets feedback
-        const earthImg = document.querySelector('#earth-texture');
-        earthImg.addEventListener('load', () => console.log('✅ Earth texture loaded'));
-        earthImg.addEventListener('error', () => console.error('❌ Failed to load earth.jpg'));
-
-        const santaImg = document.querySelector('#santa-sleigh-img');
-        santaImg.addEventListener('load', () => console.log('✅ Santa sleigh image loaded'));
-        santaImg.addEventListener('error', () => console.error('❌ Failed to load santa-sleigh.png'));
+        // Initialize language
+        setLanguage('en');
     </script>
 </body>
 </html>
