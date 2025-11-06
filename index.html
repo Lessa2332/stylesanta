@@ -174,33 +174,77 @@
                         <a-animation attribute="material.opacity" from="0.7" to="0.1" dur="1500" repeat="indefinite" direction="alternate" delay="500"></a-animation>
                     </a-sphere>
                 </a-entity>
-                <!-- Clouds atmosphere around the whole sphere -->
+                <!-- More realistic elongated clouds atmosphere -->
                 <a-entity id="clouds">
-                    <a-sphere position="0.41 0 0" radius="0.03" color="#ffffff" material="opacity: 0.6; transparent: true; shader: flat">
-                        <a-animation attribute="scale" from="1 1 1" to="1.1 1.1 1.1" dur="4000" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
-                        <a-animation attribute="material.opacity" from="0.6" to="0.4" dur="3000" repeat="indefinite" direction="alternate" delay="1000"></a-animation>
-                    </a-sphere>
-                    <a-sphere position="0.3 0.3 0.2" radius="0.025" color="#f0f8ff" material="opacity: 0.5; transparent: true; shader: flat">
-                        <a-animation attribute="scale" from="1 1 1" to="1.05 1.05 1.05" dur="3500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="500"></a-animation>
-                    </a-sphere>
-                    <a-sphere position="-0.2 0.35 -0.1" radius="0.04" color="#e6f3ff" material="opacity: 0.7; transparent: true; shader: flat">
-                        <a-animation attribute="scale" from="1 1 1" to="1.08 1.08 1.08" dur="4500" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
-                    </a-sphere>
-                    <a-sphere position="0.1 -0.2 0.35" radius="0.02" color="#ffffff" material="opacity: 0.55; transparent: true; shader: flat">
-                        <a-animation attribute="scale" from="1 1 1" to="1.03 1.03 1.03" dur="2500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="1500"></a-animation>
-                    </a-sphere>
-                    <a-sphere position="-0.35 0 -0.25" radius="0.035" color="#f0f8ff" material="opacity: 0.65; transparent: true; shader: flat">
-                        <a-animation attribute="scale" from="1 1 1" to="1.06 1.06 1.06" dur="3800" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
-                    </a-sphere>
-                    <a-sphere position="0.25 -0.3 0.1" radius="0.028" color="#e6f3ff" material="opacity: 0.5; transparent: true; shader: flat">
-                        <a-animation attribute="scale" from="1 1 1" to="1.04 1.04 1.04" dur="3200" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="2000"></a-animation>
-                    </a-sphere>
-                    <a-sphere position="-0.1 0.25 -0.3" radius="0.032" color="#ffffff" material="opacity: 0.6; transparent: true; shader: flat">
-                        <a-animation attribute="scale" from="1 1 1" to="1.07 1.07 1.07" dur="4200" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="800"></a-animation>
-                    </a-sphere>
-                    <a-sphere position="0.35 0.15 0.25" radius="0.022" color="#f0f8ff" material="opacity: 0.45; transparent: true; shader: flat">
-                        <a-animation attribute="scale" from="1 1 1" to="1.02 1.02 1.02" dur="2800" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
-                    </a-sphere>
+                    <!-- Cloud 1: Elongated horizontal puffs -->
+                    <a-entity position="0.42 0.05 0">
+                        <a-cylinder position="0 0 0" radius="0.02" height="0.08" color="#ffffff" material="opacity: 0.6; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.1 1 1.1" dur="4000" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                            <a-animation attribute="material.opacity" from="0.6" to="0.4" dur="3000" repeat="indefinite" direction="alternate" delay="1000"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="0.03 0.01 0" radius="0.015" height="0.06" color="#f0f8ff" material="opacity: 0.5; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.05 0.9 1.05" dur="3500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="500"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="-0.02 -0.01 0" radius="0.025" height="0.1" color="#e6f3ff" material="opacity: 0.7; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.08 1.02 1.08" dur="4500" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        </a-cylinder>
+                    </a-entity>
+                    <!-- Cloud 2: Varied elongated shape -->
+                    <a-entity position="0.3 0.28 0.18">
+                        <a-cylinder position="0 0 0" radius="0.018" height="0.07" color="#f0f8ff" material="opacity: 0.5; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.05 1 1.05" dur="3500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="500"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="0.04 0 0" radius="0.012" height="0.05" color="#ffffff" material="opacity: 0.55; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.03 0.95 1.03" dur="2500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="1500"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="-0.03 0.02 0" radius="0.02" height="0.09" color="#e6f3ff" material="opacity: 0.65; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.06 1.01 1.06" dur="3800" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        </a-cylinder>
+                    </a-entity>
+                    <!-- Cloud 3: Longer, stretched -->
+                    <a-entity position="-0.18 0.32 -0.08">
+                        <a-cylinder position="0 0 0" radius="0.022" height="0.12" color="#e6f3ff" material="opacity: 0.7; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.08 1.05 1.08" dur="4500" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="0.05 -0.01 0" radius="0.016" height="0.08" color="#f0f8ff" material="opacity: 0.6; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.04 0.98 1.04" dur="3200" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="2000"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="-0.04 0.03 0" radius="0.014" height="0.06" color="#ffffff" material="opacity: 0.45; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.02 1 1.02" dur="2800" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="0.02 0 -0.02" radius="0.019" height="0.1" color="#e6f3ff" material="opacity: 0.5; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.07 1.03 1.07" dur="4200" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="800"></a-animation>
+                        </a-cylinder>
+                    </a-entity>
+                    <!-- Cloud 4: Smaller, elongated vertically mixed -->
+                    <a-entity position="0.08 -0.18 0.32">
+                        <a-cylinder position="0 0 0" radius="0.015" height="0.05" color="#ffffff" material="opacity: 0.55; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.03 0.97 1.03" dur="2500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="1500"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="-0.01 0.01 0" radius="0.01" height="0.04" color="#f0f8ff" material="opacity: 0.5; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.01 0.95 1.01" dur="2200" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        </a-cylinder>
+                    </a-entity>
+                    <!-- Add more clouds for fullness -->
+                    <a-entity position="-0.32 0 -0.22">
+                        <a-cylinder position="0 0 0" radius="0.02" height="0.09" color="#f0f8ff" material="opacity: 0.65; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.06 1.02 1.06" dur="3800" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="0.03 0 0" radius="0.018" height="0.07" color="#e6f3ff" material="opacity: 0.5; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.04 0.98 1.04" dur="3200" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="2000"></a-animation>
+                        </a-cylinder>
+                    </a-entity>
+                    <a-entity position="0.22 -0.28 0.08">
+                        <a-cylinder position="0 0 0" radius="0.016" height="0.06" color="#e6f3ff" material="opacity: 0.5; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.04 1 1.04" dur="3200" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="2000"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="-0.02 -0.02 0" radius="0.012" height="0.05" color="#ffffff" material="opacity: 0.6; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.07 1.03 1.07" dur="4200" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="800"></a-animation>
+                        </a-cylinder>
+                        <a-cylinder position="0.04 0.01 0" radius="0.014" height="0.07" color="#f0f8ff" material="opacity: 0.45; transparent: true; shader: flat" rotation="0 0 90">
+                            <a-animation attribute="scale" from="1 1 1" to="1.02 0.96 1.02" dur="2800" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        </a-cylinder>
+                    </a-entity>
                 </a-entity>
             </a-sphere>
             <!-- Santa orbit -->
