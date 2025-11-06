@@ -135,6 +135,32 @@
                         <a-animation attribute="material.opacity" from="0.7" to="0.1" dur="1500" repeat="indefinite" direction="alternate" delay="500"></a-animation>
                     </a-sphere>
                 </a-entity>
+                <!-- Snow on poles - North Pole (top) -->
+                <a-entity id="north-pole-snow" position="0 0.4 0">
+                    <a-sphere position="0 0.1 0" radius="0.08" color="#ffffff" material="opacity: 0.9; transparent: true; shader: flat">
+                        <a-animation attribute="scale" from="1 1 1" to="1.05 1.05 1.05" dur="3000" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        <a-animation attribute="material.opacity" from="0.9" to="0.7" dur="2000" repeat="indefinite" direction="alternate"></a-animation>
+                    </a-sphere>
+                    <a-sphere position="0.05 0.05 0.05" radius="0.04" color="#f0f8ff" material="opacity: 0.8; transparent: true; shader: flat">
+                        <a-animation attribute="scale" from="1 1 1" to="1.03 1.03 1.03" dur="2500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="500"></a-animation>
+                    </a-sphere>
+                    <a-sphere position="-0.03 0.08 -0.02" radius="0.035" color="#e6f3ff" material="opacity: 0.85; transparent: true; shader: flat">
+                        <a-animation attribute="scale" from="1 1 1" to="1.04 1.04 1.04" dur="3500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="1000"></a-animation>
+                    </a-sphere>
+                </a-entity>
+                <!-- Snow on poles - South Pole (bottom) -->
+                <a-entity id="south-pole-snow" position="0 -0.4 0">
+                    <a-sphere position="0 -0.1 0" radius="0.07" color="#ffffff" material="opacity: 0.9; transparent: true; shader: flat">
+                        <a-animation attribute="scale" from="1 1 1" to="1.05 1.05 1.05" dur="3000" repeat="indefinite" direction="alternate" easing="easeInOutSine"></a-animation>
+                        <a-animation attribute="material.opacity" from="0.9" to="0.7" dur="2000" repeat="indefinite" direction="alternate"></a-animation>
+                    </a-sphere>
+                    <a-sphere position="0.04 -0.06 0.03" radius="0.045" color="#f0f8ff" material="opacity: 0.8; transparent: true; shader: flat">
+                        <a-animation attribute="scale" from="1 1 1" to="1.03 1.03 1.03" dur="2500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="700"></a-animation>
+                    </a-sphere>
+                    <a-sphere position="-0.05 -0.07 -0.04" radius="0.03" color="#e6f3ff" material="opacity: 0.85; transparent: true; shader: flat">
+                        <a-animation attribute="scale" from="1 1 1" to="1.04 1.04 1.04" dur="3500" repeat="indefinite" direction="alternate" easing="easeInOutSine" delay="1500"></a-animation>
+                    </a-sphere>
+                </a-entity>
             </a-sphere>
             <!-- Santa orbit -->
             <a-entity id="santa-orbit" position="0 0 -0.5">
@@ -143,7 +169,7 @@
                         id="santa-sleigh"
                         src="#santa-sleigh-img"
                         position="0 0.55 0.4"
-                        scale="0.6 0.6 0.6"
+                        scale="0.4 0.4 0.4"
                         visible="true"
                     ></a-image>
                     <!-- Magical glowing snow trail - extended and more colorful -->
@@ -343,4 +369,3 @@
     </script>
 </body>
 </html>
-
