@@ -10,9 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
 
+    <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <!-- MindAR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-particle-system-component@1.1.2/dist/aframe-particle-system-component.min.js"></script>
+    <!-- A-Frame Extras (for animations) -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
 
     <style>
         html, body {
@@ -104,12 +107,28 @@
         loading-screen="enabled: false"
         embedded
         renderer="colorManagement: true; physicallyCorrectLights: true;"
+        arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720; debugUIEnabled: false;"
     >
         <a-assets>
             <audio id="bg-music" src="./bg-music.mp3" preload="auto" loop></audio>
             <img id="earth-texture" src="./earth.jpg">
             <img id="santa-sleigh-img" src="./santa-sleigh.png">
+            <video id="video" autoplay playsinline style="display:none;"></video>
         </a-assets>
+
+        <!-- Camera video feed -->
+        <a-entity camera>
+            <a-video
+                id="camera-video"
+                src="#video"
+                width="1280"
+                height="720"
+                position="0 0 0"
+                rotation="0 0 0"
+                scale="1 1 1"
+                visible="true"
+            ></a-video>
+        </a-entity>
 
         <a-camera position="0 0 1.5" look-controls="enabled: false"></a-camera>
 
@@ -141,20 +160,75 @@
                     visible="true"
                 ></a-image>
 
-                <!-- Snow trail particles -->
-                <a-entity
-                    particle-system="
-                        preset: snow;
-                        particleCount: 100;
-                        color: #e0f7fa;
-                        size: 0.02;
-                        maxAge: 2;
-                        speed: 0.1;
-                        opacity: 0.8;
-                        texture: https://cdn.aframe.io/particle-system/examples/images/snowflake1.png;"
-                    position="0 0.6 0.4"
-                    rotation="-90 0 0"
-                ></a-entity>
+                <!-- Snow trail particles (simple version) -->
+                <a-entity id="snow-trail">
+                    <!-- Snowflake 1 -->
+                    <a-image
+                        src="https://cdn.aframe.io/particle-system/examples/images/snowflake1.png"
+                        position="0 0 0"
+                        scale="0.05 0.05 0.05"
+                        rotation="0 0 0"
+                    >
+                        <a-animation
+                            attribute="position"
+                            to="0 -0.3 0"
+                            dur="1500"
+                            repeat="indefinite"
+                            easing="linear"
+                        ></a-animation>
+                        <a-animation
+                            attribute="scale"
+                            to="0.03 0.03 0.03"
+                            dur="1500"
+                            repeat="indefinite"
+                            easing="linear"
+                        ></a-animation>
+                    </a-image>
+                    <!-- Snowflake 2 -->
+                    <a-image
+                        src="https://cdn.aframe.io/particle-system/examples/images/snowflake1.png"
+                        position="0.05 0.05 0"
+                        scale="0.04 0.04 0.04"
+                        rotation="0 0 0"
+                    >
+                        <a-animation
+                            attribute="position"
+                            to="0.05 -0.25 0"
+                            dur="1800"
+                            repeat="indefinite"
+                            easing="linear"
+                        ></a-animation>
+                        <a-animation
+                            attribute="scale"
+                            to="0.02 0.02 0.02"
+                            dur="1800"
+                            repeat="indefinite"
+                            easing="linear"
+                        ></a-animation>
+                    </a-image>
+                    <!-- Snowflake 3 -->
+                    <a-image
+                        src="https://cdn.aframe.io/particle-system/examples/images/snowflake1.png"
+                        position="-0.05 0.05 0"
+                        scale="0.06 0.06 0.06"
+                        rotation="0 0 0"
+                    >
+                        <a-animation
+                            attribute="position"
+                            to="-0.05 -0.28 0"
+                            dur="1600"
+                            repeat="indefinite"
+                            easing="linear"
+                        ></a-animation>
+                        <a-animation
+                            attribute="scale"
+                            to="0.03 0.03 0.03"
+                            dur="1600"
+                            repeat="indefinite"
+                            easing="linear"
+                        ></a-animation>
+                    </a-image>
+                </a-entity>
             </a-entity>
         </a-entity>
     </a-scene>
