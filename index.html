@@ -41,17 +41,18 @@
             position: absolute;
             top: 0;
             left: 0;
-            background: rgba(255, 255, 255, 0.9);
+            background: transparent;
             z-index: 9999;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #D42426;
+            color: #ffffff;
             font-size: 1.8em;
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
         }
 
         @keyframes pulse {
@@ -59,8 +60,16 @@
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-
         .pulse { animation: pulse 1.5s infinite; }
+
+        @keyframes glow {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        .glowing {
+            animation: glow 1.5s infinite ease-in-out;
+        }
 
         .controls {
             position: absolute;
@@ -110,7 +119,6 @@
             <audio id="bg-music" src="./bg-music.mp3" preload="auto" loop></audio>
             <img id="earth-texture" src="./earth.jpg">
             <img id="santa-sleigh-img" src="./santa-sleigh.png">
-            <img id="snowflake-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACzSURBVHgB7ZexDcMwDAT/CQg0aOBLMIIH8AgZwSN4BI/gETKCB/AAHoGj5BRSpEiKsiXLiZsCQcHi4ZCiKFKSJElS3/dSSinP51NKKeXxeMjj8ZB932Xf9+L7vu+P45Bt22TbNlmWReZ5lnmeZVmW4vs8z8X3ZVnkeZ7i+zRNMk2TjOMowzDI4/EowzDI4/EowzDIMAzFcRzFz/M8y7Is67qu67Zt277v+3EcH+cjSZIkSZIk6bf6AF3YKqfJ0Q1EAAAAAElFTkSuQmCC">
         </a-assets>
 
         <a-camera position="0 0 1.5" look-controls="enabled: false"></a-camera>
@@ -139,47 +147,39 @@
                     <a-image
                         id="santa-sleigh"
                         src="#santa-sleigh-img"
-                        position="0 0.6 0.4"
+                        position="0 0.55 0.4"
                         scale="0.4 0.4 0.4"
                         visible="true"
                     ></a-image>
-<!-- Magical glowing snow trail -->
-<a-entity id="snow-trail" position="0 0.6 0.4">
-    <!-- Particle 1 -->
-    <a-sphere radius="0.015" color="#ffffff" material="shader: flat; opacity: 0.9">
-        <a-animation attribute="position" to="0 -0.4 0" dur="1800" repeat="indefinite" easing="linear"></a-animation>
-        <a-animation attribute="scale" to="0.5 0.5 0.5" dur="1800" repeat="indefinite" easing="easeOutQuad"></a-animation>
-        <a-animation attribute="material.opacity" from="0.9" to="0" dur="1800" repeat="indefinite" easing="linear"></a-animation>
-    </a-sphere>
 
-    <!-- Particle 2 -->
-    <a-sphere radius="0.012" color="#e0f7fa" position="0.05 0.05 0" material="shader: flat; opacity: 0.85">
-        <a-animation attribute="position" to="0.05 -0.35 0" dur="1600" repeat="indefinite" easing="linear"></a-animation>
-        <a-animation attribute="scale" to="0.4 0.4 0.4" dur="1600" repeat="indefinite" easing="easeOutQuad"></a-animation>
-        <a-animation attribute="material.opacity" from="0.85" to="0" dur="1600" repeat="indefinite" easing="linear"></a-animation>
-    </a-sphere>
-
-    <!-- Particle 3 -->
-    <a-sphere radius="0.018" color="#bbdefb" position="-0.05 0.05 0" material="shader: flat; opacity: 0.95">
-        <a-animation attribute="position" to="-0.05 -0.45 0" dur="2000" repeat="indefinite" easing="linear"></a-animation>
-        <a-animation attribute="scale" to="0.6 0.6 0.6" dur="2000" repeat="indefinite" easing="easeOutQuad"></a-animation>
-        <a-animation attribute="material.opacity" from="0.95" to="0" dur="2000" repeat="indefinite" easing="linear"></a-animation>
-    </a-sphere>
-
-    <!-- Particle 4 -->
-    <a-sphere radius="0.01" color="#ffffff" position="0.08 0.03 0" material="shader: flat; opacity: 0.8">
-        <a-animation attribute="position" to="0.08 -0.3 0" dur="1400" repeat="indefinite" easing="linear"></a-animation>
-        <a-animation attribute="scale" to="0.3 0.3 0.3" dur="1400" repeat="indefinite" easing="easeOutQuad"></a-animation>
-        <a-animation attribute="material.opacity" from="0.8" to="0" dur="1400" repeat="indefinite" easing="linear"></a-animation>
-    </a-sphere>
-
-    <!-- Particle 5 -->
-    <a-sphere radius="0.016" color="#c8e6c9" position="-0.08 0.03 0" material="shader: flat; opacity: 0.9">
-        <a-animation attribute="position" to="-0.08 -0.4 0" dur="1900" repeat="indefinite" easing="linear"></a-animation>
-        <a-animation attribute="scale" to="0.55 0.55 0.55" dur="1900" repeat="indefinite" easing="easeOutQuad"></a-animation>
-        <a-animation attribute="material.opacity" from="0.9" to="0" dur="1900" repeat="indefinite" easing="linear"></a-animation>
-    </a-sphere>
-</a-entity>
+                    <!-- Magical glowing snow trail -->
+                    <a-entity id="snow-trail" position="0 0.55 0.4">
+                        <a-sphere class="glowing" radius="0.015" color="#ffffff" material="shader: flat; opacity: 0.9">
+                            <a-animation attribute="position" to="0 -0.4 0" dur="1800" repeat="indefinite" easing="linear"></a-animation>
+                            <a-animation attribute="scale" to="0.5 0.5 0.5" dur="1800" repeat="indefinite" easing="easeOutQuad"></a-animation>
+                            <a-animation attribute="material.opacity" from="0.9" to="0" dur="1800" repeat="indefinite" easing="linear"></a-animation>
+                        </a-sphere>
+                        <a-sphere class="glowing" radius="0.012" color="#e0f7fa" position="0.05 0.05 0" material="shader: flat; opacity: 0.85">
+                            <a-animation attribute="position" to="0.05 -0.35 0" dur="1600" repeat="indefinite" easing="linear"></a-animation>
+                            <a-animation attribute="scale" to="0.4 0.4 0.4" dur="1600" repeat="indefinite" easing="easeOutQuad"></a-animation>
+                            <a-animation attribute="material.opacity" from="0.85" to="0" dur="1600" repeat="indefinite" easing="linear"></a-animation>
+                        </a-sphere>
+                        <a-sphere class="glowing" radius="0.018" color="#bbdefb" position="-0.05 0.05 0" material="shader: flat; opacity: 0.95">
+                            <a-animation attribute="position" to="-0.05 -0.45 0" dur="2000" repeat="indefinite" easing="linear"></a-animation>
+                            <a-animation attribute="scale" to="0.6 0.6 0.6" dur="2000" repeat="indefinite" easing="easeOutQuad"></a-animation>
+                            <a-animation attribute="material.opacity" from="0.95" to="0" dur="2000" repeat="indefinite" easing="linear"></a-animation>
+                        </a-sphere>
+                        <a-sphere class="glowing" radius="0.01" color="#ffffff" position="0.08 0.03 0" material="shader: flat; opacity: 0.8">
+                            <a-animation attribute="position" to="0.08 -0.3 0" dur="1400" repeat="indefinite" easing="linear"></a-animation>
+                            <a-animation attribute="scale" to="0.3 0.3 0.3" dur="1400" repeat="indefinite" easing="easeOutQuad"></a-animation>
+                            <a-animation attribute="material.opacity" from="0.8" to="0" dur="1400" repeat="indefinite" easing="linear"></a-animation>
+                        </a-sphere>
+                        <a-sphere class="glowing" radius="0.016" color="#c8e6c9" position="-0.08 0.03 0" material="shader: flat; opacity: 0.9">
+                            <a-animation attribute="position" to="-0.08 -0.4 0" dur="1900" repeat="indefinite" easing="linear"></a-animation>
+                            <a-animation attribute="scale" to="0.55 0.55 0.55" dur="1900" repeat="indefinite" easing="easeOutQuad"></a-animation>
+                            <a-animation attribute="material.opacity" from="0.9" to="0" dur="1900" repeat="indefinite" easing="linear"></a-animation>
+                        </a-sphere>
+                    </a-entity>
                 </a-entity>
             </a-entity>
         </a-entity>
@@ -340,7 +340,3 @@
     </script>
 </body>
 </html>
-</html>
-
-
-
