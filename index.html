@@ -140,22 +140,46 @@
                         id="santa-sleigh"
                         src="#santa-sleigh-img"
                         position="0 0.6 0.4"
-                        scale="0.25 0.25 0.25"
+                        scale="0.4 0.4 0.4"
                         visible="true"
                     ></a-image>
+<!-- Magical glowing snow trail -->
+<a-entity id="snow-trail" position="0 0.6 0.4">
+    <!-- Particle 1 -->
+    <a-sphere radius="0.015" color="#ffffff" material="shader: flat; opacity: 0.9">
+        <a-animation attribute="position" to="0 -0.4 0" dur="1800" repeat="indefinite" easing="linear"></a-animation>
+        <a-animation attribute="scale" to="0.5 0.5 0.5" dur="1800" repeat="indefinite" easing="easeOutQuad"></a-animation>
+        <a-animation attribute="material.opacity" from="0.9" to="0" dur="1800" repeat="indefinite" easing="linear"></a-animation>
+    </a-sphere>
 
-                    <!-- Snow trail with 9 snowflakes -->
-                    <a-entity id="snow-trail" position="0 0.6 0.4">
-                        <a-entity><a-image src="#snowflake-img" scale="0.03 0.03 0.03" animation="property: position; to: 0 -0.3 0; dur: 2000; loop: true; easing: linear"></a-image></a-entity>
-                        <a-entity position="0.05 0.05 0"><a-image src="#snowflake-img" scale="0.025 0.025 0.025" animation="property: position; to: 0.05 -0.25 0; dur: 1800; loop: true; easing: linear"></a-image></a-entity>
-                        <a-entity position="-0.05 0.05 0"><a-image src="#snowflake-img" scale="0.035 0.035 0.035" animation="property: position; to: -0.05 -0.28 0; dur: 2200; loop: true; easing: linear"></a-image></a-entity>
-                        <a-entity position="0.03 0.02 0"><a-image src="#snowflake-img" scale="0.02 0.02 0.02" animation="property: position; to: 0.03 -0.2 0; dur: 1600; loop: true; easing: linear"></a-image></a-entity>
-                        <a-entity position="-0.03 0.02 0"><a-image src="#snowflake-img" scale="0.04 0.04 0.04" animation="property: position; to: -0.03 -0.35 0; dur: 2400; loop: true; easing: linear"></a-image></a-entity>
-                        <a-entity position="0.07 0.03 0"><a-image src="#snowflake-img" scale="0.02 0.02 0.02" animation="property: position; to: 0.07 -0.18 0; dur: 1400; loop: true; easing: linear"></a-image></a-entity>
-                        <a-entity position="-0.07 0.03 0"><a-image src="#snowflake-img" scale="0.03 0.03 0.03" animation="property: position; to: -0.07 -0.3 0; dur: 2000; loop: true; easing: linear"></a-image></a-entity>
-                        <a-entity position="0.09 0.04 0"><a-image src="#snowflake-img" scale="0.025 0.025 0.025" animation="property: position; to: 0.09 -0.22 0; dur: 1900; loop: true; easing: linear"></a-image></a-entity>
-                        <a-entity position="-0.09 0.04 0"><a-image src="#snowflake-img" scale="0.03 0.03 0.03" animation="property: position; to: -0.09 -0.32 0; dur: 2100; loop: true; easing: linear"></a-image></a-entity>
-                    </a-entity>
+    <!-- Particle 2 -->
+    <a-sphere radius="0.012" color="#e0f7fa" position="0.05 0.05 0" material="shader: flat; opacity: 0.85">
+        <a-animation attribute="position" to="0.05 -0.35 0" dur="1600" repeat="indefinite" easing="linear"></a-animation>
+        <a-animation attribute="scale" to="0.4 0.4 0.4" dur="1600" repeat="indefinite" easing="easeOutQuad"></a-animation>
+        <a-animation attribute="material.opacity" from="0.85" to="0" dur="1600" repeat="indefinite" easing="linear"></a-animation>
+    </a-sphere>
+
+    <!-- Particle 3 -->
+    <a-sphere radius="0.018" color="#bbdefb" position="-0.05 0.05 0" material="shader: flat; opacity: 0.95">
+        <a-animation attribute="position" to="-0.05 -0.45 0" dur="2000" repeat="indefinite" easing="linear"></a-animation>
+        <a-animation attribute="scale" to="0.6 0.6 0.6" dur="2000" repeat="indefinite" easing="easeOutQuad"></a-animation>
+        <a-animation attribute="material.opacity" from="0.95" to="0" dur="2000" repeat="indefinite" easing="linear"></a-animation>
+    </a-sphere>
+
+    <!-- Particle 4 -->
+    <a-sphere radius="0.01" color="#ffffff" position="0.08 0.03 0" material="shader: flat; opacity: 0.8">
+        <a-animation attribute="position" to="0.08 -0.3 0" dur="1400" repeat="indefinite" easing="linear"></a-animation>
+        <a-animation attribute="scale" to="0.3 0.3 0.3" dur="1400" repeat="indefinite" easing="easeOutQuad"></a-animation>
+        <a-animation attribute="material.opacity" from="0.8" to="0" dur="1400" repeat="indefinite" easing="linear"></a-animation>
+    </a-sphere>
+
+    <!-- Particle 5 -->
+    <a-sphere radius="0.016" color="#c8e6c9" position="-0.08 0.03 0" material="shader: flat; opacity: 0.9">
+        <a-animation attribute="position" to="-0.08 -0.4 0" dur="1900" repeat="indefinite" easing="linear"></a-animation>
+        <a-animation attribute="scale" to="0.55 0.55 0.55" dur="1900" repeat="indefinite" easing="easeOutQuad"></a-animation>
+        <a-animation attribute="material.opacity" from="0.9" to="0" dur="1900" repeat="indefinite" easing="linear"></a-animation>
+    </a-sphere>
+</a-entity>
                 </a-entity>
             </a-entity>
         </a-entity>
@@ -317,5 +341,6 @@
 </body>
 </html>
 </html>
+
 
 
