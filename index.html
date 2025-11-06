@@ -117,6 +117,39 @@
         </a-assets>
         <a-camera position="0 0 1.5" look-controls="enabled: false"></a-camera>
         <a-entity mindar-image-target="targetIndex: 0">
+            <!-- Twinkling stars around the scene -->
+            <a-entity id="stars">
+                <a-sphere position="1.5 0.8 -1.2" radius="0.008" color="#ffffff" material="opacity: 0.8; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.8" to="0.2" dur="1200" repeat="indefinite" direction="alternate"></a-animation>
+                </a-sphere>
+                <a-sphere position="-1.2 1.2 -0.8" radius="0.006" color="#ffffe0" material="opacity: 0.7; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.7" to="0.1" dur="1500" repeat="indefinite" direction="alternate" delay="300"></a-animation>
+                </a-sphere>
+                <a-sphere position="0.8 -0.5 1.5" radius="0.01" color="#e6f3ff" material="opacity: 0.9; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.9" to="0.3" dur="800" repeat="indefinite" direction="alternate"></a-animation>
+                </a-sphere>
+                <a-sphere position="-1.5 -1.0 -1.0" radius="0.007" color="#ffffff" material="opacity: 0.6; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.6" to="0.2" dur="2000" repeat="indefinite" direction="alternate" delay="600"></a-animation>
+                </a-sphere>
+                <a-sphere position="1.0 1.5 0.5" radius="0.005" color="#ffd700" material="opacity: 0.8; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.8" to="0.4" dur="1000" repeat="indefinite" direction="alternate"></a-animation>
+                </a-sphere>
+                <a-sphere position="0.5 -1.5 1.2" radius="0.009" color="#ffffff" material="opacity: 0.7; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.7" to="0.1" dur="1800" repeat="indefinite" direction="alternate" delay="900"></a-animation>
+                </a-sphere>
+                <a-sphere position="-0.8 0.5 -1.5" radius="0.006" color="#e6e6fa" material="opacity: 0.85; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.85" to="0.3" dur="1300" repeat="indefinite" direction="alternate"></a-animation>
+                </a-sphere>
+                <a-sphere position="1.2 -0.8 0.8" radius="0.008" color="#ffffff" material="opacity: 0.6; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.6" to="0.2" dur="1600" repeat="indefinite" direction="alternate" delay="1200"></a-animation>
+                </a-sphere>
+                <a-sphere position="-1.0 1.0 1.0" radius="0.007" color="#f0f8ff" material="opacity: 0.9; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.9" to="0.4" dur="900" repeat="indefinite" direction="alternate"></a-animation>
+                </a-sphere>
+                <a-sphere position="0.3 1.2 -0.5" radius="0.005" color="#ffffff" material="opacity: 0.75; transparent: true">
+                    <a-animation attribute="material.opacity" from="0.75" to="0.2" dur="2200" repeat="indefinite" direction="alternate" delay="1500"></a-animation>
+                </a-sphere>
+            </a-entity>
             <!-- Earth -->
             <a-sphere
                 id="earth"
@@ -236,12 +269,28 @@
         <button id="lang-btn" class="lang-btn" title="Language">🇺🇦</button>
     </div>
     <script>
-        // TOUCH GESTURES COMPONENT FOR PINCH & ROTATE - enhanced with Santa scaling
+        // Stabilization for AR jitter
+        AFRAME.registerComponent('stabilizer', {
+            init: function () {
+                this.target = this.el;
+                this.prevPos = new THREE.Vector3();
+                this.smoothFactor = 0.1; // Smoothing for position
+                this.target.addEventListener('arjs-video-loaded', () => {
+                    this.prevPos.copy(this.target.object3D.position);
+                });
+            },
+            tick: function () {
+                const pos = this.target.object3D.position;
+                pos.lerpVectors(this.prevPos, pos, this.smoothFactor);
+                this.prevPos.copy(pos);
+            }
+        });
+        // TOUCH GESTURES COMPONENT FOR PINCH & ROTATE - with reduced sensitivity
         AFRAME.registerComponent('touch-gestures', {
             schema: {
                 minScale: { type: 'number', default: 0.2 },
                 maxScale: { type: 'number', default: 3.0 },
-                rotationSpeed: { type: 'number', default: 2.0 }
+                rotationSpeed: { type: 'number', default: 1.0 } // Reduced for less jitter
             },
             init: function () {
                 this.isRotating = false;
@@ -442,6 +491,8 @@
             setLanguage(isUkrainian ? 'en' : 'uk');
         });
         setLanguage('en');
+        // Add stabilizer to the scene for AR stability
+        document.querySelector('a-scene').setAttribute('stabilizer', '');
     </script>
 </body>
 </html>
