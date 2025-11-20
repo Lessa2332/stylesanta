@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Christmas AR scene with Santa flying over Earth">
     <title>🎄 Santa Over the World</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
-    <!-- ✅ CSP-safe бібліотеки (npm, без eval, без ORB) -->
-    <script src="https://cdn.jsdelivr.net/npm/aframe@1.6.0/dist/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mindar-image-aframe@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+
     <style>
         html, body {
             margin: 0;
@@ -23,6 +25,7 @@
             font-family: 'Comic Neue', cursive, sans-serif;
             font-weight: 700;
         }
+
         a-scene {
             width: 100%;
             height: 100%;
@@ -31,39 +34,34 @@
             left: 0;
             background: transparent;
         }
+
         .arjs-loader {
             height: 100%;
             width: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.9);
             z-index: 9999;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #ffffff;
+            color: #D42426;
             font-size: 1.8em;
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
         }
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
+
         .pulse { animation: pulse 1.5s infinite; }
-        @keyframes glow {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
-        .glowing {
-            animation: glow 1.5s infinite ease-in-out;
-        }
+
         .controls {
             position: absolute;
             bottom: 20px;
@@ -71,29 +69,25 @@
             transform: translateX(-50%);
             z-index: 10000;
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
         }
+
         .sound-btn, .etsy-btn, .lang-btn {
-            padding: 8px 12px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 50%;
+            border-radius: 15px;
             cursor: pointer;
             font-family: 'Comic Neue', cursive, sans-serif;
-            font-size: 1.2em;
+            font-size: 1em;
             font-weight: 700;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-decoration: none;
         }
+
         .sound-btn { background-color: #4CAF50; color: white; }
         .sound-btn.off { background-color: #f44336; }
-        .etsy-btn { background-color: #D42426; color: white; }
+        .etsy-btn { background-color: #D42426; color: white; text-decoration: none; }
         .lang-btn { background-color: #1E88E5; color: white; }
     </style>
 </head>
@@ -102,32 +96,26 @@
         <div class="pulse">🎄 Santa Over the World</div>
         <div style="margin-top: 20px; font-size: 1.2em;">Point your camera at the marker! 🎅🌍</div>
     </div>
+
     <a-scene
-        mindar-image="imageTargetSrc: ./my-marker.mind; autoStart: false; uiLoading: no; uiError: no; uiScanning: no;"
+        mindar-image="imageTargetSrc: ./my-marker.mind;"
         vr-mode-ui="enabled: false"
         device-orientation-permission-ui="enabled: false"
         loading-screen="enabled: false"
         embedded
         renderer="colorManagement: true; physicallyCorrectLights: true;"
         touch-gestures
-        stabilizer
     >
         <a-assets>
             <audio id="bg-music" src="./bg-music.mp3" preload="auto" loop></audio>
             <img id="earth-texture" src="./earth.jpg">
             <img id="santa-sleigh-img" src="./santa-sleigh.png">
+            <img id="snowflake-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACzSURBVHgB7ZexDcMwDAT/CQg0aOBLMIIH8AgZwSN4BI/gETKCB/AAHoGj5BRSpEiKsiXLiZsCQcHi4ZCiKFKSJElS3/dSSinP51NKKeXxeMjj8ZB932Xf9+L7vu+P45Bt22TbNlmWReZ5lnmeZVmW4vs8z8X3ZVnkeZ7i+zRNMk2TjOMowzDI4/EowzDI4/EowzDIMAzFcRzFz/M8y7Is67qu67Zt277v+3EcH+cjSZIkSZIk6bf6AF3YKqfJ0Q1EAAAAAElFTkSuQmCC">
         </a-assets>
-        <a-camera position="0 0 1.5" look-controls="enabled: false"></a-camera>
-        <a-entity mindar-image-target="targetIndex: 0">
-            <!-- Twinkling stars -->
-            <a-entity id="stars">
-                <a-sphere position="1.5 0.8 -1.2" radius="0.008" color="#ffffff" material="opacity: 0.8; transparent: true"
-                          animation="property: material.opacity; from: 0.8; to: 0.2; dur: 1200; loop: true; dir: alternate"></a-sphere>
-                <a-sphere position="-1.2 1.2 -0.8" radius="0.006" color="#ffffe0" material="opacity: 0.7; transparent: true"
-                          animation="property: material.opacity; from: 0.7; to: 0.1; dur: 1500; loop: true; dir: alternate; startEvents: none" delay="300"></a-sphere>
-                <!-- (інші зірки аналогічно — скорочено для читання) -->
-            </a-entity>
 
+        <a-camera position="0 0 1.5" look-controls="enabled: false"></a-camera>
+
+        <a-entity mindar-image-target="targetIndex: 0">
             <!-- Earth -->
             <a-sphere
                 id="earth"
@@ -135,115 +123,200 @@
                 radius="0.4"
                 src="#earth-texture"
                 material="opacity: 1; transparent: false"
-                animation="property: rotation; to: 0 360 0; dur: 8000; loop: true; easing: linear"
             >
-                <a-entity id="city-lights">
-                    <a-sphere position="0.2 0.1 -0.3" radius="0.005" color="#ffff00" material="opacity: 0.8; transparent: true"
-                              animation="property: material.opacity; from: 0.8; to: 0.2; dur: 1000; loop: true; dir: alternate"></a-sphere>
-                    <a-sphere position="-0.1 -0.2 0.2" radius="0.004" color="#ff00ff" material="opacity: 0.7; transparent: true"
-                              animation="property: material.opacity; from: 0.7; to: 0.1; dur: 1500; loop: true; dir: alternate" delay="500"></a-sphere>
-                </a-entity>
+                <a-animation
+                    attribute="rotation"
+                    to="0 360 0"
+                    dur="8000"
+                    repeat="indefinite"
+                    easing="linear"
+                ></a-animation>
             </a-sphere>
 
-            <!-- Santa container -->
+            <!-- Santa orbit -->
             <a-entity id="santa-orbit" position="0 0 -0.5">
                 <a-entity id="santa-container">
                     <a-image
                         id="santa-sleigh"
                         src="#santa-sleigh-img"
-                        position="0 0.55 0.4"
-                        scale="0.4 0.4 0.4"
+                        position="0 0.6 0.4"
+                        scale="0.25 0.25 0.25"
+                        visible="true"
                     ></a-image>
-                    <!-- Snow trail spheres with modern animation -->
-                    <a-sphere class="glowing" radius="0.015" color="#ffffff" material="shader: flat; opacity: 0.9"
-                              position="0 0.55 0.4"
-                              animation__pos="property: position; to: 0 -0.4 0; dur: 1800; loop: true"
-                              animation__scale="property: scale; to: 0.5 0.5 0.5; dur: 1800; loop: true; easing: easeOutQuad"
-                              animation__fade="property: material.opacity; from: 0.9; to: 0; dur: 1800; loop: true"
-                              animation__rot="property: rotation; to: 360 0 360; dur: 1800; loop: true"></a-sphere>
-                    <!-- (інші сніжинки аналогічно) -->
+
+                    <!-- Snow trail with 9 snowflakes -->
+                    <a-entity id="snow-trail" position="0 0.6 0.4">
+                        <a-entity><a-image src="#snowflake-img" scale="0.03 0.03 0.03" animation="property: position; to: 0 -0.3 0; dur: 2000; loop: true; easing: linear"></a-image></a-entity>
+                        <a-entity position="0.05 0.05 0"><a-image src="#snowflake-img" scale="0.025 0.025 0.025" animation="property: position; to: 0.05 -0.25 0; dur: 1800; loop: true; easing: linear"></a-image></a-entity>
+                        <a-entity position="-0.05 0.05 0"><a-image src="#snowflake-img" scale="0.035 0.035 0.035" animation="property: position; to: -0.05 -0.28 0; dur: 2200; loop: true; easing: linear"></a-image></a-entity>
+                        <a-entity position="0.03 0.02 0"><a-image src="#snowflake-img" scale="0.02 0.02 0.02" animation="property: position; to: 0.03 -0.2 0; dur: 1600; loop: true; easing: linear"></a-image></a-entity>
+                        <a-entity position="-0.03 0.02 0"><a-image src="#snowflake-img" scale="0.04 0.04 0.04" animation="property: position; to: -0.03 -0.35 0; dur: 2400; loop: true; easing: linear"></a-image></a-entity>
+                        <a-entity position="0.07 0.03 0"><a-image src="#snowflake-img" scale="0.02 0.02 0.02" animation="property: position; to: 0.07 -0.18 0; dur: 1400; loop: true; easing: linear"></a-image></a-entity>
+                        <a-entity position="-0.07 0.03 0"><a-image src="#snowflake-img" scale="0.03 0.03 0.03" animation="property: position; to: -0.07 -0.3 0; dur: 2000; loop: true; easing: linear"></a-image></a-entity>
+                        <a-entity position="0.09 0.04 0"><a-image src="#snowflake-img" scale="0.025 0.025 0.025" animation="property: position; to: 0.09 -0.22 0; dur: 1900; loop: true; easing: linear"></a-image></a-entity>
+                        <a-entity position="-0.09 0.04 0"><a-image src="#snowflake-img" scale="0.03 0.03 0.03" animation="property: position; to: -0.09 -0.32 0; dur: 2100; loop: true; easing: linear"></a-image></a-entity>
+                    </a-entity>
                 </a-entity>
             </a-entity>
         </a-entity>
     </a-scene>
 
     <div class="controls">
-        <button id="sound-btn" class="sound-btn off" title="Sound">🔇</button>
-        <a href="https://smartlessa.etsy.com" target="_blank" class="etsy-btn" title="Etsy">🎁</a>
-        <button id="lang-btn" class="lang-btn" title="Language">🇺🇦</button>
+        <button id="sound-btn" class="sound-btn off">Turn Sound On</button>
+        <a href="https://smartlessa.etsy.com" target="_blank" class="etsy-btn">Visit Etsy</a>
+        <button id="lang-btn" class="lang-btn">🇺🇦 Українська</button>
     </div>
 
     <script>
-        // === Сучасні компоненти (без змін) ===
-        AFRAME.registerComponent('stabilizer', {
-            init: function () {
-                this.target = this.el;
-                this.prevPos = new THREE.Vector3();
-                this.smoothFactor = 0.1;
+        // TOUCH GESTURES COMPONENT FOR PINCH & ROTATE
+        AFRAME.registerComponent('touch-gestures', {
+            schema: {
+                minScale: { type: 'number', default: 0.2 },
+                maxScale: { type: 'number', default: 3.0 },
+                rotationSpeed: { type: 'number', default: 2.0 }
             },
-            tick: function () {
-                const pos = this.target.object3D.position;
-                pos.lerpVectors(this.prevPos, pos, this.smoothFactor);
-                this.prevPos.copy(pos);
+            init: function () {
+                this.isRotating = false;
+                this.isPinching = false;
+                this.startPos = { x: 0, y: 0 };
+                this.currentScale = 1;
+                this.planet = document.querySelector('#earth');
+                this.el.addEventListener('touchstart', (e) => {
+                    if (e.touches.length === 1) {
+                        this.isRotating = true;
+                        this.startPos.x = e.touches[0].pageX;
+                    } else if (e.touches.length === 2) {
+                        this.isPinching = true;
+                        this.isRotating = false;
+                        this.initialDistance = Math.hypot(
+                            e.touches[0].pageX - e.touches[1].pageX,
+                            e.touches[0].pageY - e.touches[1].pageY
+                        );
+                        this.currentScale = this.planet.object3D.scale.x;
+                    }
+                });
+
+                this.el.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    if (this.isPinching && e.touches.length === 2) {
+                        const currentDistance = Math.hypot(
+                            e.touches[0].pageX - e.touches[1].pageX,
+                            e.touches[0].pageY - e.touches[1].pageY
+                        );
+                        const scaleFactor = currentDistance / this.initialDistance;
+                        const newScale = Math.max(this.data.minScale, Math.min(this.data.maxScale, this.currentScale * scaleFactor));
+                        this.planet.object3D.scale.set(newScale, newScale, newScale);
+                    } else if (this.isRotating && e.touches.length === 1) {
+                        const deltaX = (e.touches[0].pageX - this.startPos.x) * this.data.rotationSpeed;
+                        this.planet.object3D.rotation.y += THREE.MathUtils.degToRad(deltaX);
+                        this.startPos.x = e.touches[0].pageX;
+                    }
+                });
+
+                this.el.addEventListener('touchend', () => {
+                    this.isRotating = false;
+                    this.isPinching = false;
+                });
             }
         });
 
-        AFRAME.registerComponent('touch-gestures', {
-            // ... ваш існуючий код без змін ...
-        });
-
-        // === Мова та логіка ===
+        // LANGUAGE & LOGIC
         let isUkrainian = false;
-        const translations = { /* ... ваші переклади ... */ };
-        function setLanguage(lang) { /* ... */ }
-        function fixHeight() { document.body.style.height = window.innerHeight + 'px'; }
+        const translations = {
+            en: {
+                title: "🎄 Santa Over the World",
+                loaderMain: "🎄 Santa Over the World",
+                loaderHint: "Point your camera at the marker! 🎅🌍",
+                soundOn: "Turn Sound On",
+                soundOff: "Turn Sound Off",
+                langBtn: "🇺🇦 Українська"
+            },
+            uk: {
+                title: "🎄 Санта над світом",
+                loaderMain: "🎄 Санта над світом",
+                loaderHint: "Наведи камеру на маркер! 🎅🌍",
+                soundOn: "Увімкнути звук",
+                soundOff: "Вимкнути звук",
+                langBtn: "🇬🇧 English"
+            }
+        };
+
+        function setLanguage(lang) {
+            isUkrainian = (lang === 'uk');
+            const t = translations[lang];
+            document.title = t.title;
+            document.querySelector('.pulse').textContent = t.loaderMain;
+            document.querySelector('.arjs-loader div[style]').textContent = t.loaderHint;
+            soundBtn.textContent = isUkrainian ? translations.uk.soundOn : translations.en.soundOn;
+            langBtn.textContent = t.langBtn;
+            document.documentElement.lang = lang;
+        }
+
+        function fixHeight() {
+            document.body.style.height = window.innerHeight + 'px';
+        }
         fixHeight();
         window.addEventListener('resize', fixHeight);
 
-        // === Головна логіка AR ===
-        const loader = document.getElementById('loader');
-        const bgMusic = document.getElementById('bg-music');
-        const soundBtn = document.getElementById('sound-btn');
-        const langBtn = document.getElementById('lang-btn');
-        const santaContainer = document.getElementById('santa-container');
+        const loader = document.querySelector('#loader');
+        const targetEntity = document.querySelector('[mindar-image-target]');
+        const bgMusic = document.querySelector('#bg-music');
+        const soundBtn = document.querySelector('#sound-btn');
+        const langBtn = document.querySelector('#lang-btn');
 
-        // Запуск AR після кліку
-        function startAR() {
-            const scene = document.querySelector('a-scene');
-            const sys = scene.systems?.['mindar-image-system']; // ✅ Правильно для 2025
-            if (sys && !sys.initialized) {
-                sys.start().catch(console.error);
-            }
+        // Santa animation
+        const santaContainer = document.querySelector('#santa-container');
+        let time = 0;
+        const radius = 0.7;
+        const heightOffset = 0.2;
+
+        function animateSanta() {
+            if (!santaContainer) return;
+            time += 0.01;
+            const angle = time * 0.5;
+            const x = Math.sin(angle) * radius;
+            const z = Math.cos(angle) * radius;
+            const y = Math.sin(time * 2) * 0.15 + heightOffset;
+            santaContainer.object3D.position.set(x, y, z);
+            santaContainer.object3D.lookAt(0, 0, -0.5);
+            requestAnimationFrame(animateSanta);
         }
 
-        // Слухаємо клік для запуску
-        document.body.addEventListener('click', startAR, { once: true });
-
-        // Події маркера
-        document.querySelector('[mindar-image-target]').addEventListener('targetFound', () => {
+        targetEntity.addEventListener('targetFound', () => {
             loader.style.display = 'none';
             if (bgMusic.paused) {
                 bgMusic.play().catch(e => console.log("🔇 Audio play error:", e));
                 soundBtn.classList.remove('off');
-                soundBtn.textContent = '🔊';
+                soundBtn.textContent = isUkrainian ? translations.uk.soundOff : translations.en.soundOff;
             }
             animateSanta();
         });
 
-        document.querySelector('[mindar-image-target]').addEventListener('targetLost', () => {
+        targetEntity.addEventListener('targetLost', () => {
             loader.style.display = 'flex';
         });
 
-        // === Анімація Санти (без змін) ===
-        function createGifts() { /* ... */ }
-        function animateSanta() { /* ... */ }
+        soundBtn.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(e => console.log("🔇 Audio play error:", e));
+                soundBtn.classList.remove('off');
+                soundBtn.textContent = isUkrainian ? translations.uk.soundOff : translations.en.soundOff;
+            } else {
+                bgMusic.pause();
+                soundBtn.classList.add('off');
+                soundBtn.textContent = isUkrainian ? translations.uk.soundOn : translations.en.soundOn;
+            }
+        });
 
-        // === Кнопки ===
-        soundBtn.addEventListener('click', () => { /* ... */ });
         langBtn.addEventListener('click', () => {
             setLanguage(isUkrainian ? 'en' : 'uk');
         });
+
         setLanguage('en');
     </script>
 </body>
 </html>
+</html>
+
+
+
